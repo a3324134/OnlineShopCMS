@@ -1,0 +1,68 @@
+﻿@model IEnumerable<OnlineShopCMS.Models.OrderViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>　</div>
+<h3>訂單管理</h3>
+<hr />
+<div style="margin-bottom:8px;">
+    <div class="row">
+        <div class="row col-7 justify-content-end">
+            <form asp-action="Index" class="col-8 ">
+                <div class="input-group input-group-sm ">
+                    <input class="form-control" type="text" placeholder="訂單編號" name="searchString" />
+                    <input class="btn btn-sm btn-primary" type="submit" value="Search" />
+                </div>
+            </form>
+        </div>
+        <div class="col-1 justify-content-end">
+            <form asp-action="Index" method="get" class="col-4 ">
+                <input type="hidden" name="isPaid" value="0">
+                <input class="btn btn-sm btn-primary" type="submit" value="未付款" />
+            </form>
+        </div>
+        <div class="col-1 justify-content-end">
+            <form asp-action="Index" method="get" class="col-4 ">
+                <input type="hidden" name="isPaid" value="1">
+                <input class="btn btn-sm btn-primary" type="submit" value="已付款" />
+            </form>
+        </div>
+        <div class="col-1 justify-content-end">
+            <form asp-action="Index" method="get" class="col-4 ">
+                <input type="hidden">
+                <input class="btn btn-sm btn-primary" type="submit" value="顯示全部訂單" />
+            </form>
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <table class="table border shadow-sm rounded">
+        <thead class="">
+            <tr>
+                <th>訂單編號：@Html.DisplayFor(modelItem => item.Order.Id)</th>
+                <th>訂單日期：@Html.DisplayFor(modelItem => item.Order.OrderDate)</th>
+                <th style="color:blue">NT$@Html.DisplayFor(modelItem => item.Order.Total)</th>
+                @if (item.Order.isPaid)
+                {
+                    <th>已付款</th>
+                }
+                else
+                {
+                    <th style="color:red">未付款</th>
+                }
+                <th>未出貨</th>
+                <th>
+                    <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.Order.Id">訂單詳細資訊</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+}
